@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taj Madikeri Hotel Booking</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #a18cd1, #fbc2eb, #fad0c4);
+        background-size: 400% 400%;
+        animation: gradientShift 12s ease infinite;
+        padding: 20px;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        border-top: 5px solid #b497f8;
+    }
+    h2 {
+        text-align: center;
+        color: #6b42f5;
+    }
+    label {
+        display: block;
+        margin-top: 12px;
+        font-weight: bold;
+        color: #4b3f6b;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 9px;
+        margin-top: 5px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+    textarea {
+        resize: vertical;
+    }
+    button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 12px;
+        background-color: #b497f8;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    button:hover {
+        background-color: #8f5de0;
+    }
+    .error {
+        color: red;
+        font-size: 13px;
+    }
+    .success {
+        color: green;
+        font-size: 16px;
+        text-align: center;
+        margin-top: 15px;
+    }
+    #price {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #6b42f5;
+        background-color: #f5edff;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+        border: 1px solid #d2b8ff;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Taj Madikeri Hotel Booking</h2>
+    <form id="bookingForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+        <span id="nameError" class="error"></span>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <span id="emailError" class="error"></span>
+
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" placeholder="Enter your phone number" required>
+        <span id="phoneError" class="error"></span>
+
+        <label for="checkin">Check-in Date</label>
+        <input type="date" id="checkin" required>
+        <span id="checkinError" class="error"></span>
+
+        <label for="checkout">Check-out Date</label>
+        <input type="date" id="checkout" required>
+        <span id="checkoutError" class="error"></span>
+
+        <label for="guests">Number of Guests</label>
+        <select id="guests" required>
+            <option value="">Select number of guests</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+        <span id="guestsError" class="error"></span>
+
+        <label for="roomType">Room Type</label>
+        <select id="roomType" required>
+            <option value="">Select room type</option>
+            <option value="deluxe">Deluxe - ₹5000/night (2 guests)</option>
+            <option value="suite">Suite - ₹8000/night (2 guests)</option>
+            <option value="presidential">Presidential - ₹12000/night (2 guests)</option>
+        </select>
+        <span id="roomError" class="error"></span>
+
+        <label for="requests">Special Requests</label>
+        <textarea id="requests" placeholder="Any special requests?"></textarea>
+
+        <p id="price">Total Price: ₹0</p>
+
+        <button type="submit">Book Now</button>
+        <p id="successMessage" class="success"></p>
+    </form>
+</div>
+
+<script>
+    const roomPrices = {
+        deluxe: 5000,
+        suite: 8000,
+        presidential: 12000
+    };
+
+    const extraGuestCharge = 1000; // Extra per night per guest beyond 2
+
+    const form = document.getElementById('bookingForm');
+    const priceDisplay = document.getElementById('price');
+
+    function calculatePrice() {
+        const checkin = document.getElementById('checkin').value;
+        const checkout = document.getElementById('checkout').value;
+        const roomType = document.getElementById('roomType').value;
+        const guests = parseInt(document.getElementById('guests').value) || 0;
+
+        if (checkin && checkout && roomType && guests > 0) {
+            const checkInDate = new Date(checkin);
+            const checkOutDate = new Date(checkout);
+            const nights = (checkOutDate - checkInDate) / (1000*60*60*24);
+
+            if (nights > 0) {
+                let basePrice = roomPrices[roomType];
+                let extraGuests = Math.max(0, guests - 2);
+                let total = nights * (basePrice + extraGuests * extraGuestCharge);
+                priceDisplay.textContent = `Total Price: ₹${total}`;
+            } else {
+                priceDisplay.textContent = "Total Price: ₹0";
+            }
+        } else {
+            priceDisplay.textContent = "Total Price: ₹0";
+        }
+    }
+
+    document.getElementById('checkin').addEventListener('change', calculatePrice);
+    document.getElementById('checkout').addEventListener('change', calculatePrice);
+    document.getElementById('roomType').addEventListener('change', calculatePrice);
+    document.getElementById('guests').addEventListener('change', calculatePrice);
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.error').forEach(el => el.textContent = '');
+        document.getElementById('successMessage').textContent = '';
+
+        let isValid = true;
+
+        const name = document.getElementById('name').value.trim();
+        if (name.length < 3) {
+            document.getElementById('nameError').textContent = "Name must be at least 3 characters.";
+            isValid = false;
+        }
+
+        const email = document.getElementById('email').value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            document.getElementById('emailError').textContent = "Enter a valid email address.";
+            isValid = false;
+        }
+
+        const phone = document.getElementById('phone').value.trim();
+        const phonePattern = /^[0-9]{10}$/;
+        if (!phonePattern.test(phone)) {
+            document.getElementById('phoneError').textContent = "Enter a valid 10-digit phone number.";
+            isValid = false;
+        }
+
+        const checkin = document.getElementById('checkin').value;
+        const checkout = document.getElementById('checkout').value;
+        if (!checkin) document.getElementById('checkinError').textContent = "Select a check-in date.";
+        if (!checkout) document.getElementById('checkoutError').textContent = "Select a check-out date.";
+        if (checkin && checkout && checkin >= checkout) {
+            document.getElementById('checkoutError').textContent = "Check-out date must be after check-in.";
+            isValid = false;
+        }
+
+        const guests = document.getElementById('guests').value;
+        if (!guests) {
+            document.getElementById('guestsError').textContent = "Select the number of guests.";
+            isValid = false;
+        }
+
+        const roomType = document.getElementById('roomType').value;
+        if (!roomType) {
+            document.getElementById('roomError').textContent = "Select a room type.";
+            isValid = false;
+        }
+
+        if (isValid) {
+            document.getElementById('successMessage').textContent = "Booking successful! Thank you for choosing Taj Madikeri.";
+        }
+    });
+</script>
+
+</body>
+</html>
+
+
+
+

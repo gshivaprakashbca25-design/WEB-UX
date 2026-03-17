@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Futuristic  Class Schedule</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow:hidden;
+  min-height:100vh;
+  perspective:1200px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+  color:#fff;
+}
+
+/* Title */
+h2 {
+  font-size:36px;
+  margin-top:80px;
+  text-align:center;
+  text-shadow:0 4px 20px rgba(0,0,0,0.5);
+  z-index:2;
+}
+
+/* Glassmorphic schedule card */
+.container {
+  width:85%;
+  max-width:900px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(25px);
+  border-radius:25px;
+  box-shadow:0 25px 60px rgba(0,0,0,0.4);
+  overflow:hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease, box-shadow 0.5s ease;
+  margin:40px auto;
+  z-index:2;
+}
+
+.container:hover {
+  transform: rotateY(3deg) rotateX(3deg) scale(1.03);
+  box-shadow:0 45px 80px rgba(0,0,0,0.5);
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+  text-align:center;
+  color:#fff;
+  transform-style: preserve-3d;
+}
+
+/* Professional Header Styling */
+th {
+  padding:18px;
+  font-size:18px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:#fff;
+  border-bottom:2px solid rgba(255,255,255,0.2);
+}
+
+/* Time header (left column) */
+th:first-child {
+  background: linear-gradient(135deg,#283E51,#485563);
+}
+
+/* Day headers (modern gradient) */
+th:not(:first-child) {
+  background: linear-gradient(135deg,#4facfe,#00f2fe);
+  color:#fff;
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.3);
+}
+
+td {
+  padding:15px;
+  font-size:16px;
+  background: rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+}
+
+tr:nth-child(even) td { background: rgba(255,255,255,0.15); }
+
+td:hover {
+  background: rgba(255,255,255,0.6);
+  color: #000;
+  font-weight: 600;
+  transform: scale(1.05) translateZ(20px);
+  border-radius: 10px;
+  cursor:pointer;
+}
+
+/* Footer */
+footer {
+  width:100%;
+  text-align:center;
+  padding:20px 0;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  margin-top:50px;
+  color:#fff;
+  box-shadow:0 -5px 20px rgba(0,0,0,0.3);
+  z-index:2;
+}
+footer p { font-size:15px; }
+
+/* 3D Floating shapes */
+.shape {
+  position:absolute;
+  border-radius:50%;
+  opacity:0.5;
+  background: linear-gradient(45deg,#4facfe,#00f2fe,#43e97b,#38f9d7);
+  animation: floatShape linear infinite;
+  z-index:0;
+}
+
+.cube {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background: linear-gradient(45deg,#00c6ff,#f8ff00,#dd2476,#ff512f);
+  opacity:0.4;
+  position:absolute;
+  animation: floatShape linear infinite;
+  z-index:0;
+}
+
+/* Animate floating shapes */
+@keyframes floatShape {
+  0% { transform: translate3d(var(--x0), var(--y0), var(--z0)) scale(var(--scale)) rotate(0deg);}
+  50% { transform: translate3d(var(--x1), var(--y1), var(--z1)) scale(var(--scale)) rotate(180deg);}
+  100% { transform: translate3d(var(--x0), var(--y0), var(--z0)) scale(var(--scale)) rotate(360deg);}
+}
+
+@media (max-width:700px){
+  h2 { font-size:28px; }
+  th, td { font-size:14px; padding:10px; }
+  .container { width:95%; }
+}
+</style>
+</head>
+<body>
+
+<h2>📘 Class Schedule</h2>
+
+<div class="container" id="scheduleCard">
+  <table>
+    <tr>
+      <th>Time</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+    </tr>
+    <tr>
+      <td>9:10 - 10:10</td>
+      <td>MATHS</td>
+      <td>C</td>
+      <td>LINUX</td>
+    </tr>
+    <tr>
+      <td>10:10 - 11:10</td>
+      <td>UHV</td>
+      <td>DIGITAL LOGIC</td>
+      <td>WEB AND UX</td>
+    </tr>
+    <tr>
+      <td>11:10 - 12:00</td>
+      <td>C LAB</td>
+      <td>LINUX LAB</td>
+      <td>WEB AND UX LAB</td>
+    </tr>
+    <tr>
+      <td>12:00 - 1:00</td>
+      <td>C</td>
+      <td>UHV</td>
+      <td>MATHS</td>
+    </tr>
+  </table>
+</div>
+
+<footer>
+  <p>© 2025 DreamSpace Designers | Crafted with 💙 for learners</p>
+</footer>
+
+<script>
+const card = document.getElementById('scheduleCard');
+document.addEventListener('mousemove', e=>{
+  const xAxis = (window.innerWidth/2 - e.pageX)/25;
+  const yAxis = (window.innerHeight/2 - e.pageY)/25;
+  card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) scale(1.05)`;
+});
+document.addEventListener('mouseleave', ()=>{
+  card.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
+});
+
+// Floating shapes
+function random(min,max){return Math.random()*(max-min)+min;}
+const shapesCount = 25;
+for(let i=0;i<shapesCount;i++){
+  const isCube = Math.random()>0.5;
+  const shape = document.createElement('div');
+  shape.className = isCube?'cube':'shape';
+  const size = random(20,80);
+  shape.style.width = shape.style.height = size+'px';
+  const x0 = random(-1000,1000)+'px';
+  const y0 = random(-800,800)+'px';
+  const z0 = random(-500,0)+'px';
+  const x1 = random(-1000,1000)+'px';
+  const y1 = random(-800,800)+'px';
+  const z1 = random(-500,0)+'px';
+  shape.style.setProperty('--x0',x0);
+  shape.style.setProperty('--y0',y0);
+  shape.style.setProperty('--z0',z0);
+  shape.style.setProperty('--x1',x1);
+  shape.style.setProperty('--y1',y1);
+  shape.style.setProperty('--z1',z1);
+  shape.style.setProperty('--scale',random(0.3,1));
+  shape.style.animationDuration = random(20,40)+'s';
+  document.body.appendChild(shape);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Animated Google Clone</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+  /* Reset and Base Styling */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: white;
+    background: radial-gradient(circle at center, #0b1b3f, #01010f);
+  }
+
+  /* 3D Animated Background Canvas */
+  #bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #0b1b3f, #01010f);
+  }
+
+  /* Header Icons */
+  .header {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .header i {
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+    color: #fff;
+  }
+
+  .header i:hover {
+    color: #00eaff;
+    transform: scale(1.2);
+  }
+
+  /* Logo */
+  .logo img {
+    width: 270px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+    animation: floatLogo 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes floatLogo {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-10px); }
+  }
+
+  /* Glass Search Bar */
+  .search-container {
+    display: flex;
+    width: 60%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    padding: 12px 20px;
+    align-items: center;
+    box-shadow: 0 8px 30px rgba(0, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .search-container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 40px rgba(0, 255, 255, 0.5);
+  }
+
+  .search-container input[type="text"] {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    color: #fff;
+    outline: none;
+  }
+
+  .search-container button {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+
+  .search-container button:hover {
+    background-color: rgba(0, 255, 255, 0.4);
+    transform: scale(1.05);
+  }
+
+  /* Buttons */
+  .buttons {
+    margin-top: 20px;
+  }
+
+  .buttons input {
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 8px;
+    border: none;
+    background-color: rgba(255,255,255,0.15);
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+    font-weight: 500;
+  }
+
+  .buttons input:hover {
+    background-color: rgba(0, 255, 255, 0.4);
+    transform: scale(1.05);
+  }
+
+  /* Footer */
+  footer {
+    position: absolute;
+    bottom: 10px;
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .search-container {
+      width: 80%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<!-- Header -->
+<div class="header">
+  <i class="fas fa-th" title="Google Apps"></i>
+  <i class="fas fa-microphone" title="Voice Search"></i>
+  <i class="fas fa-moon" id="darkModeToggle" title="Toggle Dark Mode"></i>
+</div>
+
+<!-- Logo -->
+<div class="logo">
+  <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google Logo">
+</div>
+
+<!-- Search -->
+<form class="search-container" action="https://www.google.com/search" method="GET" target="_blank">
+  <input type="text" name="q" placeholder="Search Google or type a URL" required>
+  <button type="submit">Search</button>
+</form>
+
+<!-- Buttons -->
+<div class="buttons">
+  <input type="button" value="Click here for surprise" onclick="window.location='https://www.google.com/doodles'">
+</div>
+
+<!-- Footer -->
+<footer>
+  Google Clone • Futuristic 3D Edition
+</footer>
+
+<script>
+  // 3D Particle Animation
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.z = Math.random() * 5;
+      this.size = Math.random() * 2 + 1;
+      this.speedX = (Math.random() - 0.5) * 0.8;
+      this.speedY = (Math.random() - 0.5) * 0.8;
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+
+    draw() {
+      const glow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 8);
+      glow.addColorStop(0, "rgba(0,255,255,0.8)");
+      glow.addColorStop(1, "rgba(0,255,255,0)");
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * this.z, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 120; i++) {
+    particles.push(new Particle());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let p of particles) {
+      p.update();
+      p.draw();
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // Dark Mode Toggle
+  const toggle = document.getElementById('darkModeToggle');
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    if (document.body.classList.contains('dark')) {
+      canvas.style.filter = 'brightness(0.5)';
+    } else {
+      canvas.style.filter = 'brightness(1)';
+    }
+  });
+</script>
+
+</body>
+</html>
+

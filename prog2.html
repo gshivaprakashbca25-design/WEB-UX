@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Futuristic Profile</title>
+<style>
+/* Body with deep futuristic gradient */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #0b0033, #1a0a44, #120f3f, #0b0033);
+  background-size: 400% 400%;
+  animation: gradientBG 20s ease infinite;
+  perspective: 1000px;
+  color: #00ffe0;
+}
+
+@keyframes gradientBG {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* HUD grid lines */
+.hud {
+  position:absolute; top:0; left:0; width:100%; height:100%; z-index:0;
+}
+.hud-line {
+  position:absolute;
+  background: rgba(0,255,224,0.2);
+}
+.hud-line.horizontal { height:1px; width:100%; animation: moveH 10s linear infinite; }
+.hud-line.vertical { width:1px; height:100%; animation: moveV 15s linear infinite; }
+
+@keyframes moveH { 0%{transform:translateY(0);} 100%{transform:translateY(100%);} }
+@keyframes moveV { 0%{transform:translateX(0);} 100%{transform:translateX(100%);} }
+
+/* Neon pulsing text with multiple colors */
+@keyframes neonPulse1 { 0%,100%{text-shadow:0 0 5px #ff00ff,0 0 15px #ff00ff,0 0 30px #ff00ff;} 50%{text-shadow:0 0 20px #ff00ff,0 0 40px #ff00ff,0 0 60px #ff00ff;} }
+@keyframes neonPulse2 { 0%,100%{text-shadow:0 0 5px #00ffe0,0 0 15px #00ffe0,0 0 30px #00ffe0;} 50%{text-shadow:0 0 20px #00ffe0,0 0 40px #00ffe0,0 0 60px #00ffe0;} }
+@keyframes neonPulse3 { 0%,100%{text-shadow:0 0 5px #ff5500,0 0 15px #ff5500,0 0 30px #ff5500;} 50%{text-shadow:0 0 20px #ff5500,0 0 40px #ff5500,0 0 60px #ff5500;} }
+
+h1 { font-size:3em; margin:10px 0; animation: neonPulse1 2s infinite alternate; }
+h2 { font-size:2em; margin-top:20px; animation: neonPulse2 2.5s infinite alternate; }
+h3, p { font-size:1.2em; margin:5px 0; animation: neonPulse3 3s infinite alternate; }
+
+/* Profile Image */
+img {
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  border: 3px solid #00ffe0;
+  box-shadow: 0 0 20px #00ffe0,0 0 40px #ff00ff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  z-index:2; position:relative;
+  animation: pulse 2s infinite alternate;
+}
+img:hover { transform: scale(1.1) rotate(5deg); box-shadow:0 0 50px #00ffe0,0 0 70px #ff00ff; }
+
+@keyframes pulse { 0%{box-shadow:0 0 20px #00ffe0,0 0 40px #ff00ff;} 100%{box-shadow:0 0 40px #00ffe0,0 0 80px #ff00ff;} }
+
+/* Neon Buttons */
+.button {
+  padding: 12px 25px;
+  margin: 10px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #00ffe0, #ff00ff);
+  color: #000;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 0 15px #00ffe0,0 0 25px #ff00ff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-decoration: none;
+  position: relative;
+}
+
+/* Button Hover & Tooltip */
+.button:hover { transform: translateY(-3px) scale(1.05); box-shadow:0 0 50px #00ffe0,0 0 70px #ff00ff; }
+.button:active { transform: scale(0.98); }
+.button::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,255,224,0.2);
+  color: #00ffe0;
+  padding: 5px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  text-shadow: 0 0 5px #00ffe0,0 0 10px #ff00ff;
+  box-shadow: 0 0 10px #00ffe0,0 0 20px #ff00ff;
+  transition: opacity 0.3s, transform 0.3s;
+  animation: tooltipGlow 2s infinite alternate;
+}
+.button:hover::after { opacity: 1; transform: translateX(-50%) translateY(-5px); }
+
+@keyframes tooltipGlow {
+  0%,100% { text-shadow: 0 0 5px #00ffe0,0 0 10px #ff00ff; }
+  50% { text-shadow: 0 0 20px #00ffe0,0 0 40px #ff00ff; }
+}
+
+/* Social icons */
+.socials { display:flex; justify-content:center; margin-top:15px; z-index:2; position:relative; }
+.socials a { margin:0 10px; font-size:1.5em; text-decoration:none; transition:transform 0.3s, text-shadow 0.3s; position: relative; }
+.socials a::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,255,224,0.2);
+  color: #00ffe0;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  text-shadow:0 0 5px #00ffe0,0 0 10px #ff00ff;
+  box-shadow:0 0 10px #00ffe0,0 0 20px #ff00ff;
+  transition: opacity 0.3s, transform 0.3s;
+  animation: tooltipGlow 2s infinite alternate;
+}
+.socials a:hover { transform: scale(1.3); text-shadow:0 0 20px #00ffe0,0 0 40px #ff00ff,0 0 60px #00ffe0; }
+.socials a:hover::after { opacity:1; transform: translateX(-50%) translateY(-5px); }
+
+/* Stars, shapes, streaks background */
+.stars,.shapes,.streaks { position:absolute;width:100%;height:100%;overflow:hidden;top:0;left:0; z-index:0; }
+.star { position:absolute;border-radius:50%;background:#fff; box-shadow:0 0 5px #0ff,0 0 10px #f0f,0 0 15px #0ff; width:2px; height:2px; }
+.shape { position:absolute; width:30px;height:30px; border-radius:50%; background: rgba(0,255,224,0.2); box-shadow:0 0 15px #0ff,0 0 25px #ff00ff; animation: floatShape linear infinite; }
+@keyframes floatShape {0%{transform:translateY(0);}100%{transform:translateY(1000px);}}
+.streak { position:absolute; width:2px; height:50px; background: linear-gradient(to bottom,#00ffe0,#ff00ff); opacity:0.5; filter:blur(1px); animation: streakMove linear infinite;}
+@keyframes streakMove {0%{transform:translateY(-100px);}100%{transform:translateY(110vh);}}
+
+/* Responsive */
+@media(max-width:500px){ h1{font-size:2em;} h2{font-size:1.5em;} img{width:150px;height:150px;} }
+</style>
+</head>
+<body>
+
+<div class="hud" id="hud"></div>
+<div class="stars" id="stars"></div>
+<div class="shapes" id="shapes"></div>
+<div class="streaks" id="streaks"></div>
+
+<h1>G. SHIVAPRAKASH</h1>
+<img src="C:\Users\G SHIVAPRAKASH\OneDrive\Pictures\image.jpg" alt="Profile Picture">
+<h2>About Me</h2>
+<p>Hello! I am learning web design. This is my futuristic profile page.</p>
+<h3>Contact: 7975471711</h3>
+<p>Email: shivaprakash0524@gmail.com</p>
+
+<div class="socials">
+  <a href="#" data-tooltip="GitHub" title="GitHub">🐱</a>
+  <a href="#" data-tooltip="LinkedIn" title="LinkedIn">💼</a>
+  <a href="mailto:shivaprakash0524@gmail.com" data-tooltip="Email" title="Email">✉️</a>
+</div>
+
+<div>
+  <a href="#" class="button" data-tooltip="View my portfolio">Portfolio</a>
+  <a href="#" class="button" data-tooltip="See my projects">Projects</a>
+</div>
+
+<script>
+// HUD grid lines
+const hud=document.getElementById('hud');
+for(let i=0;i<20;i++){
+  const h=document.createElement('div'); h.className='hud-line horizontal'; h.style.top=(i*5)+'%'; hud.appendChild(h);
+  const v=document.createElement('div'); v.className='hud-line vertical'; v.style.left=(i*5)+'%'; hud.appendChild(v);
+}
+
+// Stars
+const starsContainer=document.getElementById('stars'); const stars=[]; for(let i=0;i<150;i++){ const s=document.createElement('div'); s.className='star'; s.style.width=s.style.height=Math.random()*3+1+'px'; s.style.left=Math.random()*window.innerWidth+'px'; s.style.top=Math.random()*window.innerHeight+'px'; s.dataset.speed=0.2+Math.random()*0.8; starsContainer.appendChild(s); stars.push(s);}
+let mouseX=0,mouseY=0; document.addEventListener('mousemove',(e)=>{ mouseX=e.clientX/window.innerWidth-0.5; mouseY=e.clientY/window.innerHeight-0.5; });
+function animateStars(){ stars.forEach(star=>{ let speed=star.dataset.speed; let x=parseFloat(star.style.left); let y=parseFloat(star.style.top); y+=speed;if(y>window.innerHeight)y=-5; x+=mouseX*speed*5;if(x>window.innerWidth)x=0;if(x<0)x=window.innerWidth; star.style.top=y+'px'; star.style.left=x+'px'; }); requestAnimationFrame(animateStars); }
+animateStars();
+
+// Shapes
+const shapesContainer=document.getElementById('shapes'); for(let i=0;i<15;i++){ const sh=document.createElement('div'); sh.className='shape'; sh.style.left=Math.random()*window.innerWidth+'px'; sh.style.top=Math.random()*-window.innerHeight+'px'; sh.style.width=sh.style.height=20+Math.random()*40+'px'; sh.style.animationDuration=10+Math.random()*10+'s'; shapesContainer.appendChild(sh);}
+
+// Streaks
+const streaksContainer=document.getElementById('streaks'); for(let i=0;i<30;i++){ const st=document.createElement('div'); st.className='streak'; st.style.left=Math.random()*window.innerWidth+'px'; st.style.animationDuration=2+Math.random()*3+'s'; streaksContainer.appendChild(st);}
+</script>
+
+</body>
+</html>

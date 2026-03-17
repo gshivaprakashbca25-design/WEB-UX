@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karuna G S - Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(120deg, #001f3f, #001, #003);
+      color: white;
+      overflow-x: hidden;
+      animation: bgShift 10s infinite alternate ease-in-out;
+      transition: background 1s ease;
+    }
+
+    @keyframes bgShift {
+      0% { background: linear-gradient(120deg, #001f3f, #000, #002244); }
+      50% { background: linear-gradient(120deg, #000033, #001f3f, #003366); }
+      100% { background: linear-gradient(120deg, #000, #002244, #001f3f); }
+    }
+
+    nav {
+      width: 100%;
+      background: rgba(0,0,0,0.8);
+      padding: 15px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      z-index: 1000;
+      border-bottom: 2px solid #00c3ff;
+      backdrop-filter: blur(5px);
+      animation: slideDown 1s ease;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    nav a {
+      color: #00c3ff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: 0.4s;
+    }
+
+    nav a:hover, nav a.active {
+      background: #00c3ff;
+      color: #001f3f;
+      box-shadow: 0 0 15px #00c3ff, 0 0 30px #00c3ff;
+      transform: scale(1.1);
+    }
+
+    main {
+      padding: 120px 20px 50px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #00c3ff;
+      margin-bottom: 20px;
+      animation: glowText 3s infinite alternate;
+    }
+
+    @keyframes glowText {
+      from { text-shadow: 0 0 10px #00c3ff; }
+      to { text-shadow: 0 0 30px #00c3ff, 0 0 50px #00f7ff; }
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease;
+    }
+
+    /* Carousel */
+    .carousel {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 30px auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 20px #00c3ff, 0 0 40px #00c3ff;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .carousel img.active {
+      opacity: 1;
+    }
+
+    /* Carousel Navigation Buttons */
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,195,255,0.6);
+      border: none;
+      color: #001f3f;
+      font-size: 1.8rem;
+      padding: 5px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.3s;
+      z-index: 10;
+    }
+
+    .nav-btn:hover {
+      background: #00c3ff;
+      box-shadow: 0 0 15px #00c3ff, 0 0 30px #00c3ff;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    /* Tables */
+    table {
+      width: 90%;
+      margin: 30px auto;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,195,255,0.2);
+      animation: fadeUp 1s ease;
+    }
+
+    @keyframes fadeUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s;
+    }
+
+    th {
+      background: rgba(0,195,255,0.3);
+    }
+
+    tr:hover td {
+      background: rgba(0,195,255,0.1);
+      box-shadow: inset 0 0 10px #00c3ff;
+      transform: scale(1.02);
+    }
+
+    button {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 30px;
+      background: #00c3ff;
+      color: #001f3f;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+      transition: all 0.3s ease;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px #00c3ff; }
+      50% { box-shadow: 0 0 25px #00c3ff; }
+      100% { box-shadow: 0 0 10px #00c3ff; }
+    }
+
+    button:hover {
+      background: white;
+      color: #00c3ff;
+      transform: scale(1.1);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 15px 0;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      color: #aaa;
+      animation: fadeIn 2s ease;
+    }
+
+    section {
+      display: none;
+      animation: fadeInUp 0.8s ease;
+    }
+    section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="#" class="active" onclick="showSection('home', event)">🏠 Home</a>
+    <a href="#" onclick="showSection('about', event)">👩‍💼 About Me</a>
+    <a href="#" onclick="showSection('contact', event)">📞 Contact</a>
+  </nav>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="active">
+      <h1>Welcome to My Website</h1>
+      <p>Hi! I’m <strong>Karuna G S</strong>, currently studying <strong>BCA (Hons)</strong> at RV University.<br>
+      I’m a creative learner passionate about coding, design, and innovation.</p>
+
+      <div class="carousel">
+        <img src="https://via.placeholder.com/300x300/00c3ff/001f3f?text=Karuna+1" class="active" alt="Karuna 1">
+        <img src="https://via.placeholder.com/300x300/003366/ffffff?text=Karuna+2" alt="Karuna 2">
+        <img src="https://via.placeholder.com/300x300/001f3f/ffffff?text=Karuna+3" alt="Karuna 3">
+
+        <!-- Navigation Buttons -->
+        <button class="nav-btn prev">⟨</button>
+        <button class="nav-btn next">⟩</button>
+      </div>
+
+      <h2>My Hobbies</h2>
+      <table>
+        <tr><th>Hobby</th><th>Description</th></tr>
+        <tr><td>🎶 Music</td><td>Listening to different genres to relax and focus.</td></tr>
+        <tr><td>📸 Photography</td><td>Capturing creative and aesthetic moments.</td></tr>
+        <tr><td>🎮 Gaming</td><td>Strategic and fun way to improve decision-making.</td></tr>
+      </table>
+
+      <h2>My Achievements</h2>
+      <table>
+        <tr><th>Achievement</th><th>Year</th></tr>
+        <tr><td>Best Student Award - High School</td><td>2022</td></tr>
+        <tr><td>2nd Runner up in dance</td><td>2024</td></tr>
+        <tr><td>Web Design Project Showcase</td><td>2025</td></tr>
+      </table>
+
+      <button onclick="changeBackground()">Change Background 🌈</button>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I’m Karuna G S, a tech enthusiast who loves blending creativity with logic.
+      My goal is to become a full-stack developer and create impactful digital experiences.</p>
+      <p>I enjoy experimenting with new tools, exploring design concepts, and continuously learning through projects.</p>
+
+      <h2>My Education</h2>
+      <table>
+        <tr><th>Qualification</th><th>Institution</th><th>Year</th><th>Percentage</th></tr>
+        <tr><td>10th Grade</td><td>Mount Carmel English School</td><td>2022</td><td>72%</td></tr>
+        <tr><td>12th Grade</td><td>RNS PRE University PU College</td><td>2024</td><td>83%</td></tr>
+        <tr><td>BCA (Hons)</td><td>RV University</td><td>2025 - Present</td><td>—</td></tr>
+      </table>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <p>📞 Phone: +91 9148903672</p>
+      <p>✉ Email: <a href="mailto:karuna51224@gmail.com" style="color:#00c3ff;">karuna51224@gmail.com</a></p>
+      <p>📍 Location: Bengaluru, India</p>
+    </section>
+  </main>
+
+  <footer>✨ Designed by Karuna G S | © 2025 ✨</footer>
+
+  <script>
+    const sections = ["home", "about", "contact"];
+    function showSection(id, e) {
+      e.preventDefault();
+      sections.forEach(sec => document.getElementById(sec).classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+      e.target.classList.add("active");
+    }
+
+    // Background changer
+    const colors = [
+      ["#001f3f", "#003366"],
+      ["#003366", "#660066"],
+      ["#002233", "#004466"],
+      ["#001a33", "#004080"],
+      ["#330066", "#000033"]
+    ];
+    function changeBackground() {
+      const [c1, c2] = colors[Math.floor(Math.random() * colors.length)];
+      document.body.style.background = `linear-gradient(120deg, ${c1}, ${c2})`;
+    }
+
+    // Carousel with buttons + auto-slide
+    const slides = document.querySelectorAll(".carousel img");
+    const nextBtn = document.querySelector(".next");
+    const prevBtn = document.querySelector(".prev");
+    let index = 0;
+    let autoSlide;
+
+    function showSlide(newIndex) {
+      slides[index].classList.remove("active");
+      index = (newIndex + slides.length) % slides.length;
+      slides[index].classList.add("active");
+    }
+
+    function nextSlide() {
+      showSlide(index + 1);
+    }
+
+    function prevSlide() {
+      showSlide(index - 1);
+    }
+
+    nextBtn.addEventListener("click", () => {
+      nextSlide();
+      resetAutoSlide();
+    });
+    prevBtn.addEventListener("click", () => {
+      prevSlide();
+      resetAutoSlide();
+    });
+
+    function startAutoSlide() {
+      autoSlide = setInterval(nextSlide, 3000);
+    }
+
+    function resetAutoSlide() {
+      clearInterval(autoSlide);
+      startAutoSlide();
+    }
+
+    startAutoSlide();
+  </script>
+</body>
+</html>

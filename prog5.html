@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<style>
+/* Reset & Base */
+* { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+body { font-family: 'Arial', sans-serif; overflow-x:hidden; min-height:100vh; position:relative; color:#fff; }
+
+/* Animated Gradient Background */
+body::before {
+  content:"";
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: linear-gradient(270deg, #ff5f6d, #ffc371, #24c6dc, #514a9d);
+  background-size:800% 800%;
+  z-index:-2;
+  animation: gradientBG 20s ease infinite;
+}
+@keyframes gradientBG {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* Stars */
+.star {
+  position:absolute;
+  width:2px; height:2px;
+  background:white;
+  border-radius:50%;
+  opacity:0.8;
+  animation: starAnim linear infinite;
+  z-index:-1;
+}
+@keyframes starAnim {
+  0%{transform:translateY(0px);}
+  100%{transform:translateY(-1000px);}
+}
+
+/* Header */
+header {
+  text-align:center;
+  padding:50px 20px;
+  font-size:2.5rem;
+  text-shadow:0 0 10px #fff,0 0 20px #ff00ff;
+  letter-spacing:2px;
+  position:sticky;
+  top:0;
+  background:rgba(0,0,0,0.4);
+  z-index:10;
+}
+
+/* Layout */
+.container {
+  display:flex;
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+  gap:20px;
+}
+aside {
+  flex:1;
+  background:rgba(0,0,0,0.5);
+  border-radius:15px;
+  padding:20px;
+  min-width:200px;
+  position:sticky;
+  top:120px;
+  height:max-content;
+}
+aside h2 { margin-bottom:20px; color:#00ffe0; }
+aside ul { list-style:none; }
+aside ul li { margin:15px 0; }
+aside ul li a { color:#ffcc00; text-decoration:none; transition:0.3s; }
+aside ul li a:hover { color:#00ffe0; }
+
+/* Main Content */
+main {
+  flex:3;
+  display:flex;
+  flex-direction:column;
+  gap:50px;
+}
+section {
+  background:rgba(0,0,0,0.4);
+  border-radius:15px;
+  padding:30px;
+  scroll-margin-top:140px;
+}
+section h1 { margin-bottom:20px; color:#ffc371; }
+section p { line-height:1.6; font-size:1.1rem; }
+
+/* Footer */
+footer {
+  text-align:center;
+  padding:20px;
+  background:rgba(0,0,0,0.7);
+  margin-top:20px;
+}
+
+/* Floating shapes */
+.shape {
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  animation: floatShape linear infinite;
+  z-index:-1;
+}
+@keyframes floatShape {
+  0%{transform:translate3d(0,0,0) rotate(0deg);}
+  50%{transform:translate3d(50px,-50px,0) rotate(180deg);}
+  100%{transform:translate3d(0,0,0) rotate(360deg);}
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .container{flex-direction:column;}
+  aside{position:static;}
+}
+</style>
+</head>
+<body>
+
+<header>🌌 AESTHETIC WEBPAGE</header>
+
+<div class="container">
+  <aside>
+    <h2>Navigation</h2>
+    <ul>
+      <li><a href="#home">🏠 Home</a></li>
+      <li><a href="#gallery">📸 Gallery</a></li>
+      <li><a href="#about">📖 About</a></li>
+      <li><a href="#contact">📩 Contact</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <section id="home">
+      <h1>Welcome!</h1>
+      <p>This is a fully new futuristic webpage design with animations. The background has a flowing gradient, stars, and floating shapes for a lively dynamic feel. Explore the sections using the navigation menu.</p>
+    </section>
+
+    <section id="gallery">
+      <h1>Gallery</h1>
+      <p>
+       <cemter> <img src="https://www.thoughtco.com/thmb/mvzDYqXzP4T_D7JfMTsWm5GgDZA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/sunrise-at-taj-mahal--agra--uttar-pradash--india-583682538-5b91840bc9e77c0050bdc67b.jpg " width="200" height="100" alt="taj mahal"></cemter>
+     <img src="https://wallpaperaccess.com/full/1896134.jpg " width="200" height="100" alt="india gate"></p>
+     <img src="https://globalgrasshopper.com/wp-content/uploads/2011/01/Mumbai-India-scaled.jpg" width="200" height="100" >
+     <img src="https://wallpapers.com/images/hd/golden-temple-complex-at-dusk-ws756t22w6c6zmtf.jpg"  width="200" height="100" >
+    </section>
+
+    <section id="about">
+      <h1>About</h1>
+      <p>This page demonstrates a modern layout with a sticky sidebar and animated background. It is fully responsive and uses neon-inspired colors for a futuristic look.</p>
+    </section>
+
+    <section id="contact">
+      <h1>Contact us</h1>
+      <p><a href="shivaprakash0524@gmail.com">shivaprakash0524@gmail.com</a></p>
+      <p>contact number: +91 7975471711</p>
+    </section>
+  </main>
+</div>
+
+<footer>© 2025 Futuristic Designs</footer>
+
+<script>
+// Add stars
+for(let i=0;i<100;i++){
+  const star=document.createElement('div');
+  star.className='star';
+  star.style.left=Math.random()*window.innerWidth+'px';
+  star.style.top=Math.random()*window.innerHeight+'px';
+  star.style.width=star.style.height=Math.random()*3+1+'px';
+  star.style.animationDuration=(10+Math.random()*15)+'s';
+  star.style.animationDelay=Math.random()*5+'s';
+  document.body.appendChild(star);
+}
+
+// Add floating shapes
+for(let i=0;i<20;i++){
+  const shape=document.createElement('div');
+  shape.className='shape';
+  const size=20+Math.random()*80;
+  shape.style.width=shape.style.height=size+'px';
+  shape.style.left=Math.random()*window.innerWidth+'px';
+  shape.style.top=Math.random()*window.innerHeight+'px';
+  shape.style.animationDuration=(15+Math.random()*15)+'s';
+  shape.style.animationDelay=Math.random()*5+'s';
+  document.body.appendChild(shape);
+}
+</script>
+
+</body>
+</html>

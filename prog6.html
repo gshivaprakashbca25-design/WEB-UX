@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cricket Information - Interactive  Edition</title>
+  <style>
+    /* Global */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+      height: 100vh;
+      color: #fff;
+      background: radial-gradient(circle at 50% 50%, #001f3f, #000814);
+      position: relative;
+    }
+
+    /* Background Canvas */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+    }
+
+    header {
+      text-align: center;
+      padding: 25px 0;
+      background: rgba(0, 100, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-bottom: 3px solid rgba(0, 150, 255, 0.4);
+      box-shadow: 0 0 25px rgba(0, 150, 255, 0.5);
+      animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 15px rgba(0,150,255,0.3); }
+      to { box-shadow: 0 0 30px rgba(0,150,255,0.8); }
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 40px;
+      perspective: 1000px;
+    }
+
+    .card {
+      width: 300px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 5px 25px rgba(0, 150, 255, 0.3);
+      padding: 20px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover {
+      transform: translateY(-15px) rotateY(10deg);
+      box-shadow: 0 20px 40px rgba(0, 150, 255, 0.7);
+    }
+
+    .card h2 {
+      color: #00d4ff;
+      margin-bottom: 10px;
+    }
+
+    .card ul li {
+      list-style: square;
+      margin: 5px 0;
+    }
+
+    .highlight {
+      position: relative;
+      background: rgba(0, 255, 200, 0.1);
+      border: 1px solid rgba(0, 255, 200, 0.3);
+      padding: 10px;
+      margin-top: 15px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .highlight:hover {
+      transform: scale(1.05);
+      background: rgba(0, 255, 200, 0.2);
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.6);
+    }
+
+    .highlight span {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: linear-gradient(135deg, #00f0ff, #007bff);
+      color: white;
+      padding: 5px 8px;
+      border-radius: 50%;
+      font-size: 12px;
+      box-shadow: 0 0 10px rgba(0,255,255,0.8);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      background: rgba(0, 100, 255, 0.15);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      padding: 15px;
+      border-top: 2px solid rgba(0,150,255,0.4);
+      box-shadow: 0 0 20px rgba(0,150,255,0.5);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <header>
+    <h1>🏏 Cricket Information</h1>
+    <p>The Gentleman’s Game in a Modern Glow</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>History</h2>
+      <p>Cricket originated in England during the 16th century and has grown into one of the most popular sports worldwide.</p>
+    </div>
+
+    <div class="card">
+      <h2>Formats</h2>
+      <ul>
+        <li>Test Cricket (5 days)</li>
+        <li>One Day Internationals (50 overs)</li>
+        <li>T20 Internationals (20 overs)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Famous Players</h2>
+      <div class="highlight">Sachin Tendulkar <span>Legend</span></div>
+      <div class="highlight">Virat Kohli <span>King</span></div>
+      <div class="highlight">M.S. Dhoni <span>Cool</span></div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Cricket Fan Page | Interactive 3D Neon Edition
+  </footer>
+
+  <script>
+    // Interactive Neon Particle Background
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    const colors = ["#00ffff", "#00aaff", "#0077ff", "#33ccff"];
+    let mouse = { x: null, y: null };
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Create particles
+    for (let i = 0; i < 150; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 1,
+        dx: (Math.random() - 0.5) * 0.8,
+        dy: (Math.random() - 0.5) * 0.8,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+
+    // Track mouse
+    window.addEventListener("mousemove", (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        // move
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+        // react to mouse
+        if (mouse.x && mouse.y) {
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            p.x += dx / dist * 2;
+            p.y += dy / dist * 2;
+          }
+        }
+
+        // draw
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = p.color;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(drawParticles);
+    }
+
+    drawParticles();
+  </script>
+</body>
+</html>
